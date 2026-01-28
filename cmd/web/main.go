@@ -3,37 +3,36 @@ package main
 import (
 	"fmt"
 	"log/slog"
-	"net/http"
 	"os"
 	"time"
 
-	"github.com/axbrunn/gocars/internal/application"
+	"github.com/axbrunn/gocars/internal/app"
 	"github.com/axbrunn/gocars/internal/config"
 	"github.com/axbrunn/gocars/internal/logger"
-	"github.com/axbrunn/gocars/internal/router"
+	"github.com/axbrunn/gocars/internal/routes"
+	"github.com/axbrunn/gocars/internal/server"
 )
 
 func main() {
 	cfg := config.LoadConfig()
 	logger := logger.New()
 
-	app := application.Application{
+	app := &app.Application{
 		Logger: logger,
 		Config: cfg,
 	}
 
-	srv := &http.Server{
+	srv := server.NewServer(server.Config{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),
-		Handler:      router.Routes(app),
+		Handler:      routes.SetupRoutes(app),
+		Logger:       logger,
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
-		ErrorLog:     slog.NewLogLogger(logger.Handler(), slog.LevelError),
+	})
+
+	if err := srv.Start(); err != nil {
+		slog.Error(err.Error())
+		os.Exit(1)
 	}
-
-	slog.Info("server started", "port", cfg.Port)
-
-	err := srv.ListenAndServe()
-	slog.Error(err.Error())
-	os.Exit(1)
 }
