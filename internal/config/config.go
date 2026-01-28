@@ -11,7 +11,7 @@ type Config struct {
 
 var version = "0.0.1"
 
-func LoadConfig() Config {
+func LoadConfig() *Config {
 	var cfg Config
 
 	flag.StringVar(&cfg.Version, "version", version, "Application version")
@@ -21,5 +21,5 @@ func LoadConfig() Config {
 
 	flag.Parse()
 
-	return cfg
+	return &cfg
 }

@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/axbrunn/gocars/internal/application"
 	"github.com/axbrunn/gocars/internal/config"
 	"github.com/axbrunn/gocars/internal/logger"
 	"github.com/axbrunn/gocars/internal/router"
@@ -15,11 +16,15 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 	logger := logger.New()
-	slog.SetDefault(logger)
+
+	app := application.Application{
+		Logger: logger,
+		Config: cfg,
+	}
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.Port),
-		Handler:      router.Routes(cfg),
+		Handler:      router.Routes(app),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
