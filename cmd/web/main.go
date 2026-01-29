@@ -8,8 +8,8 @@ import (
 
 	"github.com/axbrunn/gocars/internal/app"
 	"github.com/axbrunn/gocars/internal/config"
+	"github.com/axbrunn/gocars/internal/http/routes"
 	"github.com/axbrunn/gocars/internal/logger"
-	"github.com/axbrunn/gocars/internal/routes"
 	"github.com/axbrunn/gocars/internal/server"
 )
 

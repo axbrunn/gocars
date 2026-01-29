@@ -4,9 +4,19 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+
+	"github.com/axbrunn/gocars/internal/http/respond"
 )
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+type HomeHandler struct {
+	logger *slog.Logger
+}
+
+func NewHomeHandler(logger *slog.Logger) *HomeHandler {
+	return &HomeHandler{logger: logger}
+}
+
+func (h *HomeHandler) Index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Server", "Go")
 
 	files := []string{
@@ -17,14 +27,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
-		slog.Error(err.Error(), "method", r.Method, "uri", r.URL.RequestURI())
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		respond.ServerError(w, r, h.logger, err)
 		return
 	}
 
 	err = ts.ExecuteTemplate(w, "base", nil)
 	if err != nil {
-		slog.Error(err.Error(), "method", r.Method, "uri", r.URL.RequestURI())
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		respond.ServerError(w, r, h.logger, err)
 	}
 }
