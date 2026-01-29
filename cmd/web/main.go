@@ -11,15 +11,23 @@ import (
 	"github.com/axbrunn/gocars/internal/http/routes"
 	"github.com/axbrunn/gocars/internal/logger"
 	"github.com/axbrunn/gocars/internal/server"
+	"github.com/axbrunn/gocars/internal/web"
 )
 
 func main() {
 	cfg := config.LoadConfig()
 	logger := logger.New()
 
+	templateCache, err := web.NewTemplateCashe()
+	if err != nil {
+		slog.Error(err.Error())
+		os.Exit(1)
+	}
+
 	app := &app.Application{
-		Logger: logger,
-		Config: cfg,
+		Logger:    logger,
+		Config:    cfg,
+		Templates: templateCache,
 	}
 
 	srv := server.NewServer(server.Config{

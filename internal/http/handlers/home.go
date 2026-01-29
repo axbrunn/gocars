@@ -1,38 +1,27 @@
 package handlers
 
 import (
-	"html/template"
 	"log/slog"
 	"net/http"
 
-	"github.com/axbrunn/gocars/internal/http/respond"
+	"github.com/axbrunn/gocars/internal/web"
 )
 
 type HomeHandler struct {
-	logger *slog.Logger
+	logger   *slog.Logger
+	renderer *web.Renderer
 }
 
-func NewHomeHandler(logger *slog.Logger) *HomeHandler {
-	return &HomeHandler{logger: logger}
+func NewHomeHandler(logger *slog.Logger, renderer *web.Renderer) *HomeHandler {
+	return &HomeHandler{
+		logger:   logger,
+		renderer: renderer,
+	}
 }
 
 func (h *HomeHandler) Index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Server", "Go")
 
-	files := []string{
-		"internal/templates/layout/base.tmpl",
-		"internal/templates/layout/nav.tmpl",
-		"internal/templates/public/home.tmpl",
-	}
-
-	ts, err := template.ParseFiles(files...)
-	if err != nil {
-		respond.ServerError(w, r, h.logger, err)
-		return
-	}
-
-	err = ts.ExecuteTemplate(w, "base", nil)
-	if err != nil {
-		respond.ServerError(w, r, h.logger, err)
-	}
+	td := web.TemplateData{Title: "Home"}
+	h.renderer.Render(w, http.StatusOK, "home.tmpl", td)
 }

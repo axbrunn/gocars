@@ -4,9 +4,12 @@ import (
 	"log/slog"
 
 	"github.com/axbrunn/gocars/internal/config"
+	"github.com/axbrunn/gocars/internal/web"
 )
 
 type Application struct {
-	Logger *slog.Logger
-	Config *config.Config
+	Logger    *slog.Logger
+	Config    *config.Config
+	Templates web.TemplateCache
+	Renderer  *web.Renderer
 }

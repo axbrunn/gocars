@@ -16,7 +16,7 @@ func SetupRoutes(app *app.Application) http.Handler {
 
 	// handlers
 	handleHealth := handlers.NewHealthcheckHandler(app.Logger, app.Config)
-	handleHome := handlers.NewHomeHandler(app.Logger)
+	handleHome := handlers.NewHomeHandler(app.Logger, app.Renderer)
 
 	// end points
 	r.HandlerFunc(http.MethodGet, "/healthcheck", handleHealth.Check)
