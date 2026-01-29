@@ -24,10 +24,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	renderer := web.NewRenderer(templateCache, logger)
+
 	app := &app.Application{
 		Logger:    logger,
 		Config:    cfg,
 		Templates: templateCache,
+		Renderer:  renderer,
 	}
 
 	srv := server.NewServer(server.Config{
