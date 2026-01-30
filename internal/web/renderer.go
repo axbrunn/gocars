@@ -9,17 +9,17 @@ import (
 )
 
 type Renderer struct {
-	templatesCash TemplateCache
+	TemplateCache TemplateCache
 }
 
 func NewRenderer(tc TemplateCache) *Renderer {
 	return &Renderer{
-		templatesCash: tc,
+		TemplateCache: tc,
 	}
 }
 
 func (rendr *Renderer) Render(w http.ResponseWriter, r *http.Request, status int, page string, td TemplateData) {
-	ts, ok := rendr.templatesCash[page]
+	ts, ok := rendr.TemplateCache[page]
 	if !ok {
 		err := fmt.Errorf("the template %s does not exist", page)
 		respond.ServerError(w, r, err)
