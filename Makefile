@@ -18,11 +18,10 @@ confirm:
 # DEVELOPMENT
 # ==================================================================================== #
 
-## run/api: run the cmd/api application
+## run/web: run the cmd/web application
 .PHONY: run/api
 run/web:
-	@go run ./cmd/web
-    # @go run ./cmd/api -db-dsn=${DB_DSN}
+	@go run ./cmd/web -db-dsn=${DB_DSN}
 
 .PHONY: db/psql
 db/psql:

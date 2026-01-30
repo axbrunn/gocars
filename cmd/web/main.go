@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/axbrunn/gocars/internal/app"
-	"github.com/axbrunn/gocars/internal/config"
 	"github.com/axbrunn/gocars/internal/http/routes"
 	"github.com/axbrunn/gocars/internal/logger"
 	"github.com/axbrunn/gocars/internal/server"
@@ -15,8 +14,24 @@ import (
 )
 
 func main() {
-	cfg := config.LoadConfig()
+	cfg := app.LoadConfig()
 	logger := logger.New()
+	slog.SetDefault(logger)
+
+	logger.Info("connecting to database")
+
+	db, err := app.OpenDB(*cfg)
+	if err != nil {
+		logger.Error(err.Error())
+		os.Exit(1)
+	}
+
+	defer func() {
+		logger.Info("closing database connection")
+		db.Close()
+	}()
+
+	logger.Info("database connection pool established")
 
 	templateCache, err := web.NewTemplateCashe()
 	if err != nil {
@@ -24,7 +39,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	renderer := web.NewRenderer(templateCache, logger)
+	renderer := web.NewRenderer(templateCache)
 
 	app := &app.Application{
 		Logger:    logger,
@@ -42,7 +57,8 @@ func main() {
 		WriteTimeout: 10 * time.Second,
 	})
 
-	if err := srv.Start(); err != nil {
+	err = srv.Start()
+	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
 	}

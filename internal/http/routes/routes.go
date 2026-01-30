@@ -5,7 +5,9 @@ import (
 
 	"github.com/axbrunn/gocars/internal/app"
 	"github.com/axbrunn/gocars/internal/http/handlers"
+	"github.com/axbrunn/gocars/internal/http/middleware"
 	"github.com/julienschmidt/httprouter"
+	"github.com/justinas/alice"
 )
 
 func SetupRoutes(app *app.Application) http.Handler {
@@ -15,12 +17,14 @@ func SetupRoutes(app *app.Application) http.Handler {
 	r.Handler(http.MethodGet, "/static/*filepath", http.StripPrefix("/static", fileServer))
 
 	// handlers
-	handleHealth := handlers.NewHealthcheckHandler(app.Logger, app.Config)
-	handleHome := handlers.NewHomeHandler(app.Logger, app.Renderer)
+	handleHealth := handlers.NewHealthcheckHandler(app.Config)
+	handleHome := handlers.NewHomeHandler(app.Renderer)
 
 	// end points
 	r.HandlerFunc(http.MethodGet, "/healthcheck", handleHealth.Check)
 	r.HandlerFunc(http.MethodGet, "/", handleHome.Index)
 
-	return r
+	standard := alice.New(middleware.RecoverPanic, middleware.LogRequest, middleware.CommonHeaders)
+
+	return standard.Then(r)
 }

@@ -10,7 +10,7 @@ type TemplateCache map[string]*template.Template
 func NewTemplateCashe() (TemplateCache, error) {
 	cache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob("./templates/public/*.tmpl")
+	pages, err := filepath.Glob("./templates/pages/*.tmpl")
 	if err != nil {
 		return nil, err
 	}
@@ -18,13 +18,17 @@ func NewTemplateCashe() (TemplateCache, error) {
 	for _, page := range pages {
 		name := filepath.Base(page)
 
-		files := []string{
-			"./templates/layout/base.tmpl",
-			"./templates/layout/nav.tmpl",
-			page,
+		ts, err := template.ParseGlob("./templates/layout/base.tmpl")
+		if err != nil {
+			return nil, err
 		}
 
-		ts, err := template.ParseFiles(files...)
+		ts, err = ts.ParseGlob("./templates/partials/*.tmpl")
+		if err != nil {
+			return nil, err
+		}
+
+		ts, err = ts.ParseFiles(page)
 		if err != nil {
 			return nil, err
 		}
