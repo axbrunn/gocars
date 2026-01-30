@@ -23,3 +23,44 @@ piet.gocars.nl
 ```
 
 Middleware leest het domein en koppelt de request aan het juiste autobedrijf (dealer).
+
+---
+
+## Hosts file (voor lokale tenants)
+
+Voeg tenant-subdomains toe aan je hosts-bestand.
+
+### Windows
+
+1. Open **Notepad als administrator**
+2. Open:
+
+   ```
+   C:\Windows\System32\drivers\etc\hosts
+   ```
+3. Voeg toe:
+
+   ```
+   127.0.0.1 tenant1.localhost
+   127.0.0.1 tenant2.localhost
+   ```
+
+### Linux / macOS
+
+```bash
+sudo nano /etc/hosts
+```
+
+Voeg toe:
+
+```
+127.0.0.1 tenant1.localhost
+127.0.0.1 tenant2.localhost
+```
+
+Daarna:
+
+* [http://tenant1.localhost:8080](http://tenant1.localhost:8080)
+* [http://tenant2.localhost:8080](http://tenant2.localhost:8080)
+
+---
