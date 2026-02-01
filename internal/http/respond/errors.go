@@ -15,6 +15,14 @@ func ServerError(w http.ResponseWriter, r *http.Request, err error) {
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
 
+func BadRequestResponse(w http.ResponseWriter, r *http.Request, err error) {
+	http.Error(w, err.Error(), http.StatusBadRequest)
+}
+
+func NotFoundResponse(w http.ResponseWriter, r *http.Request, err error) {
+	http.Error(w, err.Error(), http.StatusNotFound)
+}
+
 func ClientError(w http.ResponseWriter, status int) {
 	http.Error(w, http.StatusText(status), status)
 }

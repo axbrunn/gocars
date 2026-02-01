@@ -24,7 +24,12 @@ func SetupRoutes(app *app.Application) http.Handler {
 	r.HandlerFunc(http.MethodGet, "/healthcheck", handleHealth.Check)
 	r.HandlerFunc(http.MethodGet, "/", handleHome.Index)
 
-	standard := alice.New(middleware.RecoverPanic, middleware.LogRequest, middleware.CommonHeaders)
+	standard := alice.New(
+		middleware.CheckTenant(app.Models),
+		middleware.RecoverPanic,
+		middleware.LogRequest,
+		middleware.CommonHeaders,
+	)
 
 	return standard.Then(r)
 }

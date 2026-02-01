@@ -9,6 +9,7 @@ import (
 	"github.com/axbrunn/gocars/internal/app"
 	"github.com/axbrunn/gocars/internal/http/routes"
 	"github.com/axbrunn/gocars/internal/logger"
+	"github.com/axbrunn/gocars/internal/models"
 	"github.com/axbrunn/gocars/internal/server"
 	"github.com/axbrunn/gocars/internal/web"
 )
@@ -46,6 +47,7 @@ func main() {
 		Config:    cfg,
 		Templates: templateCache,
 		Renderer:  renderer,
+		Models:    models.NewModels(db),
 	}
 
 	srv := server.NewServer(server.Config{
