@@ -6,17 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{template "title" .}} | GoCars</title>
         <link rel='stylesheet' href='/static/css/main.css'>
+        <link rel='shortcut icon' href='/static/images/favicon.ico' type='image/x-icon'>
     </head>
     <body>
         <div class="row-container">
             {{template "nav" .}}
-            <header class="col-container hashed lilac">
-                <div class="blue"></div>
-                <div class="content">
-                    <h1><a href="/">GoCars</a></h1>
-                </div>
-                <div class="blue"></div>
-            </header>
+            {{template "header" .}}
             <main class="col-container">
                 <div class="blue"></div>
                     {{template "main" .}}
