@@ -20,11 +20,13 @@ func NewHomeHandler(renderer *web.Renderer) *HomeHandler {
 func (h *HomeHandler) Index(w http.ResponseWriter, r *http.Request) {
 	td := web.NewTemplateData(r)
 
+	theme := "site"
 	if tenant, ok := middleware.TenantFromContext(r.Context()); ok {
 		td.Title = tenant.Name
+		theme = "classic"
 	} else {
 		td.Title = "GoCars"
 	}
 
-	h.renderer.Render(w, r, http.StatusOK, "home.tmpl", td)
+	h.renderer.Render(w, r, http.StatusOK, "home.tmpl", theme, td)
 }

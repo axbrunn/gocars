@@ -10,7 +10,7 @@ import (
 type Application struct {
 	Logger    *slog.Logger
 	Config    *Config
-	Templates web.TemplateCache
+	Templates web.ThemeCache
 	Renderer  *web.Renderer
 	Models    models.Models
 }

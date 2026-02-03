@@ -1,0 +1,19 @@
+{{define "base"}}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{template "title" .}}</title>
+    </head>
+    <body style="margin:0; font-family: Georgia, serif; background:#faf9f6; color:#333;">
+        {{template "nav" .}}
+        <main style="max-width:800px; margin:0 auto; padding:2rem;">
+            {{template "main" .}}
+        </main>
+        <footer style="text-align:center; padding:1rem; border-top:1px solid #ddd; color:#999;">
+            <p>&copy; {{.CurrentYear}} {{.Title}}</p>
+        </footer>
+    </body>
+</html>
+{{end}}

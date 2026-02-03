@@ -34,7 +34,7 @@ func main() {
 
 	logger.Info("database connection pool established")
 
-	templateCache, err := web.NewTemplateCashe()
+	templateCache, err := web.NewTemplateCache()
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
