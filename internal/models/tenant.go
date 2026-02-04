@@ -9,10 +9,11 @@ import (
 )
 
 type Tenant struct {
-	ID        uuid.UUID
-	Slug      string
-	Name      string
-	CreatedAt time.Time
+	ID           uuid.UUID
+	Slug         string
+	Name         string
+	TemplateSlug string
+	CreatedAt    time.Time
 }
 
 type TenantModel struct {
@@ -25,9 +26,11 @@ func (m TenantModel) Get(slug string) (*Tenant, error) {
 	}
 
 	query := `
-        SELECT id, slug, name, created_at
-        FROM tenants
-        WHERE slug = $1`
+	SELECT t.id, t.slug, t.name, tpl.slug AS template_slug, t.created_at
+	FROM tenants t
+	JOIN templates tpl ON t.template_id = tpl.id
+	WHERE t.slug = $1
+	`
 
 	var tenant Tenant
 
@@ -35,6 +38,7 @@ func (m TenantModel) Get(slug string) (*Tenant, error) {
 		&tenant.ID,
 		&tenant.Slug,
 		&tenant.Name,
+		&tenant.TemplateSlug,
 		&tenant.CreatedAt,
 	)
 	if err != nil {

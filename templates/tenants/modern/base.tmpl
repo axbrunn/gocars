@@ -5,15 +5,21 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{template "title" .}}</title>
+        <link rel='stylesheet' href='/static/css/modern.css'>
     </head>
-    <body style="margin:0; font-family: sans-serif; background:#111; color:#fff;">
-        {{template "nav" .}}
-        <main style="max-width:960px; margin:0 auto; padding:2rem;">
-            {{template "main" .}}
-        </main>
-        <footer style="text-align:center; padding:1rem; color:#666;">
-            <p>&copy; {{.CurrentYear}} {{.Title}}</p>
-        </footer>
+    <body>
+        <div class="row-container">
+            {{template "nav" .}}
+            {{template "header" .}}
+            <main>
+                {{template "main" .}}
+            </main>
+            <footer>
+                <div class="content">
+                    <p>&copy; {{.CurrentYear}} {{.Title}}</p>
+                </div>
+            </footer>
+        </div>
     </body>
 </html>
 {{end}}

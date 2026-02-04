@@ -198,6 +198,10 @@ nav .content {
 
 header .content {
     padding: 48px;
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)),
+        url("https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1920&q=80")
+            center/cover no-repeat;
 }
 
 main .content {

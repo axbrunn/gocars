@@ -1,0 +1,249 @@
+:root {
+    --color-link: #0ea5e9;
+    --color-text: #0f172a;
+    --color-text-subtle: #0f172a80;
+
+    --color-accent: #0ea5e9;
+    --color-accent-bg: #0ea5e90a;
+    --color-accent-border: #0ea5e925;
+
+    --color-surface: #f8fafc;
+    --color-surface-raised: #ffffff;
+    --color-border: #e2e8f0;
+
+    --color-nav-bg: #f1f5f9;
+    --color-nav-text: #0f172a;
+    --color-nav-accent: #0ea5e9;
+
+    --color-header-bg: #f0f9ff;
+    --color-header-border: #bae6fd;
+
+    --color-footer-bg: #f1f5f9;
+    --color-footer-border: #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-link: #38bdf8;
+        --color-text: #f1f5f9;
+        --color-text-subtle: #94a3b8;
+
+        --color-accent: #38bdf8;
+        --color-accent-bg: #0ea5e912;
+        --color-accent-border: #0ea5e933;
+
+        --color-surface: #0b1120;
+        --color-surface-raised: #131c2e;
+        --color-border: #1e293b;
+
+        --color-nav-bg: #020617;
+        --color-nav-text: #f1f5f9;
+        --color-nav-accent: #38bdf8;
+
+        --color-header-bg: #0c1629;
+        --color-header-border: #1e3a5f;
+
+        --color-footer-bg: #0c1629;
+        --color-footer-border: #1e293b;
+    }
+}
+
+/* === RESET === */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* === LAYOUT === */
+
+body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    line-height: 1.6;
+    color: var(--color-text);
+    font-size: 16px;
+    background-color: var(--color-surface);
+}
+
+@media only screen and (max-width: 650px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+.row-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === NAV === */
+
+nav {
+    background: var(--color-nav-bg);
+    border-bottom: 2px solid var(--color-accent);
+}
+
+nav .content {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 16px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo a {
+    color: var(--color-nav-text);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+}
+
+nav .links a {
+    color: var(--color-nav-text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+nav .links a:hover {
+    text-decoration: underline;
+}
+
+/* === HEADER === */
+
+header {
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80")
+            center/cover no-repeat;
+    border-bottom: 2px solid var(--color-accent);
+}
+
+header .content {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 80px 48px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+}
+
+header h1 a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header p {
+    color: #cbd5e1;
+    margin-top: 8px;
+}
+
+@media only screen and (max-width: 650px) {
+    header h1 {
+        font-size: 1.75rem;
+    }
+
+    header .content {
+        padding: 48px 20px;
+    }
+}
+
+/* === MAIN === */
+
+main {
+    flex: 1;
+    background: var(--color-surface);
+}
+
+main .content {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px;
+}
+
+/* === FOOTER === */
+
+footer {
+    background: var(--color-footer-bg);
+    border-top: 1px solid var(--color-footer-border);
+}
+
+footer .content {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 24px 48px;
+    text-align: center;
+    color: var(--color-text-subtle);
+    font-size: 0.875rem;
+}
+
+/* === TYPOGRAPHY === */
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    color: var(--color-text-subtle);
+    line-height: 1.7;
+}
+
+strong {
+    font-weight: 600;
+}
+
+.subtle {
+    color: var(--color-text-subtle);
+}
+
+@media only screen and (max-width: 650px) {
+    nav .content,
+    header .content,
+    main .content,
+    footer .content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.intro-text {
+    font-size: 3.4rem;
+}
