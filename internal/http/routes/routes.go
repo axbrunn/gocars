@@ -25,6 +25,7 @@ func SetupRoutes(app *app.Application) http.Handler {
 	r.HandlerFunc(http.MethodGet, "/healthcheck", handleHealth.Check)
 	r.HandlerFunc(http.MethodGet, "/", handleHome.Index)
 
+	// TODO: Build RequireTenant middleware
 	r.HandlerFunc(http.MethodGet, "/vehicle/view/:slug", handleVehicle.View)
 	r.HandlerFunc(http.MethodGet, "/vehicle/list", handleVehicle.List)
 
