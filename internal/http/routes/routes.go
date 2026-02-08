@@ -19,10 +19,14 @@ func SetupRoutes(app *app.Application) http.Handler {
 	// handlers
 	handleHealth := handlers.NewHealthcheckHandler(app.Config)
 	handleHome := handlers.NewHomeHandler(app.Renderer)
+	handleVehicle := handlers.NewVehicleHandler(app.Renderer)
 
 	// end points
 	r.HandlerFunc(http.MethodGet, "/healthcheck", handleHealth.Check)
 	r.HandlerFunc(http.MethodGet, "/", handleHome.Index)
+
+	r.HandlerFunc(http.MethodGet, "/vehicle/view/:slug", handleVehicle.View)
+	r.HandlerFunc(http.MethodGet, "/vehicle/list", handleVehicle.List)
 
 	standard := alice.New(
 		middleware.CheckTenant(app.Models),

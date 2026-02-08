@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/axbrunn/gocars/internal/http/middleware"
 	"github.com/axbrunn/gocars/internal/http/respond"
 )
 
@@ -18,7 +19,17 @@ func NewRenderer(tc ThemeCache) *Renderer {
 	}
 }
 
-func (rendr *Renderer) Render(w http.ResponseWriter, r *http.Request, status int, page string, theme string, td TemplateData) {
+func (rendr *Renderer) Render(w http.ResponseWriter, r *http.Request, status int, page string, td TemplateData) {
+	var theme string
+
+	if tenant, ok := middleware.TenantFromContext(r.Context()); ok {
+		td.Title = tenant.Name
+		theme = tenant.TemplateSlug
+	} else {
+		td.Title = "GoCars"
+		theme = "site"
+	}
+
 	tc, ok := rendr.ThemeCache[theme]
 	if !ok {
 		err := fmt.Errorf("the theme %s does not exist", theme)

@@ -9,8 +9,12 @@
     </head>
     <body>
         <div class="row-container">
-            {{template "nav" .}}
-            {{template "header" .}}
+            <nav>
+                {{template "nav" .}}
+            </nav>
+            <header class="lilac">
+                {{template "header" .}}
+            </header>
             <main>
                 {{template "main" .}}
             </main>
